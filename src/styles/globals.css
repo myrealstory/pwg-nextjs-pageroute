@@ -1,21 +1,48 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  body {
+    @apply h-full text-[16px] bg-primaryGrey relative;
+  }
+}
+
+@layer components {
+  .focusRing {
+    @apply focus:border-2 focus:border-hoverOrange focus:bg-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-hoverOrange;
+  }
+  .errorRing {
+    @apply focus:border-2 focus:border-warning focus:bg-transparent focus:outline-none focus:ring-1 focus:ring-warning ;
+  }
+  .multiline-truncate {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 8em; /* Adjust based on your line height */
+    line-height: 1.5em; /* Ensure it matches the line height */
+    word-break:break-all;/* Break long words and wrap them to the next line */
+    hyphens: auto;/* Insert hyphens at appropriate break points */
+  }
 }

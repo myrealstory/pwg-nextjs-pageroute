@@ -1,18 +1,37 @@
-import type { Config } from "tailwindcss";
+/** @type {import('tailwindcss').Config} */
 
-export default {
+module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors:{
+      grey: "#DDDDDD",
+      primaryGrey: "#DDDDDD",
+      primaryYellow:"#F8B959",
+      blue:"#008cba",
+      csname:"#0033cc",
+      warning:"#F95A50",
+      btnRedHover:"#b02a37",
+      red:"#E6a5a1",
+      primaryGreen:"#B4F8C8",
+      forestGreen:"#228b22",
+      tagColor:"#FDEACD",
+      hoverOrange:"#FFC700",
+      white:"#FFFFFF",
+      black:"#000000",
+      blurBG: "rgba(0 , 0 ,0 , 0.2)",
+      transparent:"#00000000",
+    },
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [require("@tailwindcss/forms")],
+};
