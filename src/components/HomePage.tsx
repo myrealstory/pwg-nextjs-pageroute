@@ -72,6 +72,7 @@ const HomePage: React.FC<HomePageProps> = ({
         id: 0,
     });
     const [activeBar, setActiveBar] = useState(1);
+    const [hover, setHover] = useState<number|null>(null);
     const router = useRouter();
 
     useEffect(()=> {
@@ -106,7 +107,7 @@ const HomePage: React.FC<HomePageProps> = ({
                 {page.map(page => (
                         <button 
                             key={page}
-                            className={`text-sm ${currentPage === page ? "bg-primaryYellow text-white":"bg-white text-black/60"}  text-center px-3 py-2 rounded-lg`}
+                            className={`text-sm ${currentPage === page ? "bg-purple2 text-white":"bg-white text-black/60"}  text-center px-3 py-2 rounded-lg`}
                             onClick={()=>changePage(page)}
                         >
                             {page}
@@ -121,10 +122,10 @@ const HomePage: React.FC<HomePageProps> = ({
     if (!data || !data.data) return null;
 
     return (
-        <div className="mx-auto flex flex-col items-center pt-8 mb-[10rem] w-full 2xl:max-w-[1380px] lg:max-w-[80%] md:max-w-[70%] h-full px-4">
+        <div className={`mx-auto flex flex-col items-center pt-8 mb-[10rem] w-full 2xl:max-w-[1380px] lg:max-w-[80%] md:max-w-[70%] h-full px-4`}>
             <div className=" flex items-center justify-between mb-6 w-full">
                 <button
-                    className="bg-primaryYellow text-white md:py-2 md:px-8 rounded-full py-1 px-3 text-sm"
+                    className="bg-purple2 text-white md:py-2 md:px-8 rounded-full py-1 px-3 text-sm"
                     onClick={() => triggerModal("add",true, 0)}
                 >
                     Add New Post
@@ -176,22 +177,31 @@ const HomePage: React.FC<HomePageProps> = ({
                 {data.data.map(item =>(
                     <div 
                         key={item.id}
-                        className="bg-white rounded-2xl py-6 px-8 w-full h-auto flex flex-col gap-1"
-                        onClick={()=> router.push(`/viewPost/${item.id}`)}    
+                        className={`bg-white rounded-2xl border-2 py-6 px-8 w-full h-auto flex flex-col gap-1
+                            ${hover === item.id ? "border-purple":"border-transparent"}
+                            `}
+                            onMouseEnter={()=>setHover(item.id)}
+                            onMouseLeave={()=>setHover(null)}
                     >   
-                        <p className="text-primaryYellow text-sm mb-2">{moment(item.date).format("YYYY.MM.DD")}</p>
-                        <div className="flex items-center gap-2 mb-2 w-full flex-wrap">
+                        <p className="text-purple text-sm mb-2">{moment(item.date).format("YYYY.MM.DD")}</p>
+                        <div 
+                            className="flex items-center gap-2 mb-2 w-full flex-wrap"
+                        onClick={()=> router.push(`/viewPost/${item.id}`)}    
+                            >
                             {item.tags.map((tag,index) =>(
-                                <div className="bg-hoverOrange rounded-full text-center px-3 py-1 flex text-[0.6rem] font-medium" key={index}>
+                                <div className="bg-lightPurple   rounded-full text-center px-3 py-1 flex text-[0.6rem] font-medium" key={index}>
                                     {tag}
                                 </div>
                             ))}
                         </div>
-                        <h4 className="text-lg ">{item.title}</h4>
-                        <p className="max-h-[80px] text-base multiline-truncate mb-4" dangerouslySetInnerHTML={{ __html:item.body}}/>
-                        <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-lg " onClick={()=> router.push(`/viewPost/${item.id}`)}    >{item.title}</h4>
+                        <p className="lg:max-h-[80px] max-h-auto lg:h-[5em] h-fit text-base multiline-truncate mb-4" dangerouslySetInnerHTML={{ __html:item.body}}
+                        onClick={()=> router.push(`/viewPost/${item.id}`)}    
+                        
+                        />
+                        <div className="flex items-center justify-end gap-2">
                             <button 
-                                className="2xl:mr-2 bg-blue hover:bg-csname text-white px-5 py-1 rounded-full text-center text-sm"
+                                className="2xl:mr-2 bg-blue hover:bg-csname text-white px-5 py-1 rounded-full text-center text-sm relative z-50"
                                 onClick={()=>triggerModal("edit", true,item.id)}
                             >
                                 Edit

@@ -134,18 +134,18 @@ export const LoginPage = () => {
 
 
     return (
-        <div className="bg-white w-full md:max-w-[500px] min-w-[300px] flex justify-center items-center flex-col rounded-3xl p-10 mx-4">
+        <div className="bg-white w-full md:max-w-[500px] min-w-[300px] flex justify-center items-center flex-col rounded-3xl p-10 mx-4 shadow-xl">
             <h4 className=" text-center text-3xl mb-16">Login Page</h4>
             <form className="w-[80%] mb-4">
                 <div className="flex flex-col items-center justify-center gap-7 mb-6 w-full">
                     <div className="w-full">
-                        <HeaderInline labelName="Email" />
+                        <HeaderInline labelName="Email" error={formError.email === true}/>
                         <input
                             type="email"
                             id="email"
                             name="email"
                             required
-                            className={`w-full border-2 ${formError.email === true ? "border-warning ":" border-primaryYellow"}  rounded-full py-1 px-5 focusRing `}
+                            className={`w-full border-2 ${formError.email === true ? "border-warning ":" border-purple2"}  rounded-full py-1 px-5 focusRing `}
                             value={formValue.email}
                             onChange = {handleInput}
                             onBlur={handleBlur}
@@ -153,12 +153,12 @@ export const LoginPage = () => {
                             {formError.email && <p className="text-warning text-md">{formError.emailErrorMessage}</p>}
                     </div>
                     <div className="w-full">
-                        <HeaderInline labelName="Password" />
+                        <HeaderInline labelName="Password" error={formError.password === true}/>
                         <input
                             type="password"
                             id="password"
                             name="password"
-                            className={`w-full border-2 ${formError.password === true ? "border-warning ":" border-primaryYellow"} rounded-full py-1 px-5 focusRing`}
+                            className={`w-full border-2 ${formError.password === true ? "border-warning ":" border-purple2"} rounded-full py-1 px-5 focusRing`}
                             required
                             minLength={6}
                             value={formValue.password}
@@ -171,7 +171,7 @@ export const LoginPage = () => {
 
                 <button
                     type="submit"
-                    className={`bg-primaryYellow text-black w-full rounded-full p-2 mt-7 text-lg ${formError.email || formError.password ? "cursor-normal pointer-events-none" : "cursor-pointer"}`}
+                    className={`bg-purple text-white w-full rounded-full p-2 mt-7 text-lg ${formError.email || formError.password ? "cursor-normal pointer-events-none" : "cursor-pointer"}`}
                     disabled={formError.email || formError.password ? true : false}
                     onClick={handleSubmit}
                     >
@@ -180,7 +180,7 @@ export const LoginPage = () => {
             </form>
             <button
                 type="button"
-                className="text-primaryYellow md:w-[70%] mx-auto bg-transparent p-2 text-center text-xl"
+                className="text-purple md:w-[70%] mx-auto bg-transparent p-2 text-center text-xl"
                 onClick={() => router.push("/register")}
             >Create an account</button>
             {showModal.switch && (

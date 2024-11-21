@@ -1,8 +1,8 @@
 
-export const HeaderInline = ({labelName}:{labelName: string}) =>{
+export const HeaderInline = ({labelName,error,className}:{labelName: string;error:boolean,className?:string}) =>{
     return (
-        <div>
-            <label htmlFor={labelName} className="text-black text-md mb-2">
+        <div className={`mb-2 ${className}`}>
+            <label htmlFor={labelName} className={`${error? "text-warning":"text-purple"} text-md`}>
                 {labelName}
             </label>
         </div>

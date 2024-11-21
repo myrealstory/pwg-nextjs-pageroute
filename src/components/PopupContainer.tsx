@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { HeaderInline } from "./HeaderInline";
 import { TagsOptions } from "@/Mock/TagMock";
 import { reFetchPage } from "@/utils/helper";
+import { IoMdClose } from "react-icons/io";
 
 
 export const PopupContainer = ({modModal, modal ,triggerModal,data}: PopupContainerType) => {
@@ -204,9 +205,9 @@ export const PopupContainer = ({modModal, modal ,triggerModal,data}: PopupContai
                         sizes="100vw"
                         className="w-[60px] h-auto mb-6"
                         />
-                    <p className="text-black text-lg mb-5">{modal.message}</p>
+                    <p className="text-purple text-lg mb-5">{modal.message}</p>
                     <button 
-                        className="bg-primaryYellow text-black px-3 py-2 rounded-lg"
+                        className="bg-purple text-white px-3 py-2 rounded-lg"
                         onClick={()=>{
                             localStorage.removeItem("token");
                             window.location.href="/"
@@ -221,13 +222,13 @@ export const PopupContainer = ({modModal, modal ,triggerModal,data}: PopupContai
 
     if(modModal.show === true && modModal.type === "delete" && currentData) {
         return (
-            <div className="fixed top-0 left-0 w-full h-full bg-blurBG z-50 flex justify-center items-center">
-                <div className="bg-white px-16 py-8 rounded-lg flex flex-col justify-center items-center gap-5 lg:max-w-[500px] max-w-[400px] w-full text-center">
-                    <p className="text-warning text-lg ">{currentData.title}</p>
-                    <p className="text-black text-lg ">{"Are you sure you want to delete this post ?"}</p>
-                    <div className=" flex gap-6 ">
+            <div className="fixed top-0 left-0 w-full h-full bg-blurBG filter backdrop-blur-sm z-50 flex justify-center items-center">
+                <div className="bg-white p-8 rounded-lg flex flex-col justify-center items-center gap-2 lg:max-w-[400px] max-w-[400px] w-full text-center">
+                    <p className="text-warning text-lg font-medium ">{currentData.title}</p>
+                    <p className="text-warning text-md ">{"Are you sure you want to delete this post ?"}</p>
+                    <div className=" flex gap-6 mt-6">
                         <button
-                            className="bg-tagColor text-black px-8 py-1 rounded-full"
+                            className="bg-lightPurple text-black px-8 py-1 rounded-full"
                             onClick={()=>triggerModal("", false, 0)}
                         >
                             cancel
@@ -250,10 +251,10 @@ export const PopupContainer = ({modModal, modal ,triggerModal,data}: PopupContai
                 <div className="bg-white lg:p-16 p-8 rounded-lg flex flex-col justify-center items-center gap-5 w-full lg:max-w-[500px] max-w-[400px]">
                     <p className="text-black lg:text-[1.3rem] text-[1rem]">{modModal.type === "add" ? "Add A Post":"Edit Post"}</p>
                     <div className="w-full">
-                        <HeaderInline labelName={"Title"} />
+                        <HeaderInline labelName={"Title"} error={formError.title}/>
                         <input
                             type="text"
-                            className={`border-2 ${formError.title ? "border-warning":"border-primaryYellow"}  rounded-full px-3 py-1 w-full focusRing`}
+                            className={`border-2 ${formError.title ? "border-warning":"border-purple"}  rounded-full px-3 py-1 w-full focusRing`}
                             name="title"
                             id="Title"
                             required
@@ -264,9 +265,9 @@ export const PopupContainer = ({modModal, modal ,triggerModal,data}: PopupContai
                         {formError.title === true && <p className="text-warning text-md">{formError.titleErrorMessage}</p>}
                     </div>
                     <div className="w-full">
-                        <HeaderInline labelName={"Content"} />
+                        <HeaderInline labelName={"Content"} error={formError.body}/>
                         <textarea
-                            className={`border-2 ${formError.body ? "border-warning":"border-primaryYellow"} rounded-lg px-3 py-1 w-full h-36 focusRing`}
+                            className={`border-2 ${formError.body ? "border-warning":"border-purple"} rounded-lg px-3 py-1 w-full h-36 focusRing`}
                             name="body"
                             id="Content"
                             required
@@ -276,44 +277,44 @@ export const PopupContainer = ({modModal, modal ,triggerModal,data}: PopupContai
                         />
                         {formError.body === true && <p className="text-warning text-md">{formError.bodyErrorMessage}</p>}
                     </div>
-                    <div className="relative w-full lg:mb-8 mb-5">
-                        <HeaderInline labelName="Tags"/>
+                    <div className="relative w-full">
+                        <HeaderInline labelName="Tags" error={formError.tags}/>
                         <select
                             name="tags"
                             id="Tags"
                             value=""
                             onChange={(e)=>handleSelect(e.target.value)}
                             onBlur={(e) => handleSelectBlur(e.target.value)}
-                            className={`border-2 ${formError.tags ? "border-warning":"border-primaryYellow"}  rounded-full px-3 py-1 w-full focusRing text-white`}
+                            className={`border-2 ${formError.tags ? "border-warning":"border-purple"}  rounded-full px-3 py-1 w-full focusRing text-white`}
                         >
                             <option value="" disabled></option>
                             {availableTags.map((tag, index)=>(
                                 <option key={index} value={tag} className="text-black">{tag}</option>
                             ))}
                         </select>
-                        <div className="absolute left-3 top-[1.85rem] flex gap-3 z-50 ">
+                        <div className="absolute lg:left-3 left-2 bottom-[0.4rem] flex lg:gap-3 gap-1 z-50 ">
                             {selectedTags.map(tags =>(
                                 <button 
                                     key={tags} 
                                     role="button"
-                                    className="bg-primaryGrey text-black px-4 py-1 rounded-full text-[0.7rem]"
+                                    className="bg-purple text-white lg:px-4 px-2 py-1 flex items-center gap-1 rounded-full text-[0.7rem]"
                                     onClick={()=>handleSelectRemove(tags)}
                                     >
-                                        {tags}
+                                       <IoMdClose className="text-md text-white "/>  {tags}
                                 </button>
                             ))}
                         </div>
                         {formError.tags === true && <p className="text-warning text-md">{formError.tagsErrorMessage}</p>}
                     </div>
-                    <div className=" flex gap-6 ">
+                    <div className=" flex gap-6 mt-6">
                         <button
-                            className="bg-tagColor text-black px-8 py-1 rounded-full"
+                            className="bg-lightPurple text-black px-8 py-1 rounded-full"
                             onClick={()=>triggerModal("", false, 0)}
                         >
                             Cancel
                         </button>
                         <button
-                            className="bg-primaryYellow text-black px-8 py-1 rounded-full"
+                            className="bg-purple text-white px-8 py-1 rounded-full"
                             onClick={(e:React.MouseEvent<HTMLButtonElement>)=>{
                                 if(modModal.type === "add"){
                                     handleAddSubmit(e)
